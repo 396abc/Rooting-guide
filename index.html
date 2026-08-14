@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en" data-color-mode="dark" data-dark-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Android Root Guide w/ Google Wallet</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --color-canvas-default: #0d1117;
+  --color-canvas-subtle: #161b22;
+  --color-canvas-inset: #010409;
+  --color-border-default: #30363d;
+  --color-border-muted: #21262d;
+  --color-fg-default: #e6edf3;
+  --color-fg-muted: #8b949e;
+  --color-fg-subtle: #6e7681;
+  --color-accent-fg: #58a6ff;
+  --color-accent-emphasis: #1f6feb;
+  --color-accent-subtle: rgba(56,139,253,0.1);
+  --color-accent-muted: rgba(56,139,253,0.4);
+  --color-danger-fg: #f85149;
+  --color-danger-emphasis: #da3633;
+  --color-danger-subtle: rgba(248,81,73,0.1);
+  --color-danger-muted: rgba(248,81,73,0.4);
+  --color-attention-fg: #d29922;
+  --color-attention-subtle: rgba(187,128,9,0.15);
+  --color-attention-muted: rgba(187,128,9,0.4);
+  --color-success-fg: #3fb950;
+  --color-success-subtle: rgba(46,160,67,0.1);
+  --color-success-muted: rgba(46,160,67,0.4);
+  --color-done-fg: #a371f7;
+  --color-done-subtle: rgba(130,80,255,0.1);
+  --radius: 6px;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--color-canvas-default);
+  color: var(--color-fg-default);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--color-accent-fg); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.top-banner {
+  background: var(--color-attention-subtle);
+  border-bottom: 1px solid var(--color-attention-muted);
+  padding: 8px 16px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-attention-fg);
+}
+
+header {
+  border-bottom: 1px solid var(--color-border-default);
+  padding: 32px 24px 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.breadcrumb {
+  font-size: 12px;
+  color: var(--color-fg-muted);
+  margin-bottom: 12px;
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--color-fg-default);
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: var(--color-fg-muted);
+  font-size: 14px;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+.label-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 2em;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.label-blue { background: var(--color-accent-subtle); border-color: var(--color-accent-muted); color: var(--color-accent-fg); }
+.label-purple { background: var(--color-done-subtle); border-color: rgba(163,113,247,0.4); color: var(--color-done-fg); }
+.label-green { background: var(--color-success-subtle); border-color: var(--color-success-muted); color: var(--color-success-fg); }
+.label-gray { background: rgba(110,118,129,0.1); border-color: rgba(110,118,129,0.4); color: var(--color-fg-muted); }
+
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 0 32px;
+  padding: 0 24px 64px;
+  align-items: start;
+}
+
+.sidebar {
+  position: sticky;
+  top: 16px;
+  padding-top: 24px;
+  font-size: 12px;
+}
+
+.nav-group { margin-bottom: 20px; }
+
+.nav-group-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-fg-muted);
+  margin-bottom: 4px;
+  padding-left: 8px;
+}
+
+.nav-links { display: flex; flex-direction: column; }
+
+.nav-link {
+  color: var(--color-fg-muted);
+  padding: 4px 8px;
+  border-radius: var(--radius);
+  transition: background 0.1s, color 0.1s;
+  line-height: 1.4;
+  font-size: 13px;
+}
+
+.nav-link:hover { background: var(--color-canvas-subtle); color: var(--color-fg-default); text-decoration: none; }
+.nav-link.active { background: var(--color-accent-emphasis); color: #fff; }
+
+.content { padding-top: 24px; }
+
+.section { margin-bottom: 48px; }
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-fg-muted);
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-border-muted);
+}
+
+.section h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-fg-default);
+  margin-bottom: 4px;
+}
+
+.section-desc {
+  color: var(--color-fg-muted);
+  font-size: 13px;
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.step {
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--color-canvas-subtle);
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.step-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-accent-emphasis);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+}
+
+.step-num.done {
+  background: var(--color-success-fg);
+}
+
+.step h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-fg-default);
+}
+
+.step-body {
+  padding: 16px;
+}
+
+.step-body p {
+  color: var(--color-fg-muted);
+  font-size: 13.5px;
+  line-height: 1.65;
+}
+
+.step-body p + p { margin-top: 10px; }
+
+code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: var(--color-canvas-inset);
+  border: 1px solid var(--color-border-muted);
+  color: var(--color-fg-default);
+  padding: 1px 5px;
+  border-radius: 3px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s, border-color 0.1s;
+}
+
+code.flash {
+  background: var(--color-success-subtle);
+  border-color: var(--color-success-muted);
+  color: var(--color-success-fg);
+}
+
+pre {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  background: var(--color-canvas-inset);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius);
+  color: #e6edf3;
+  padding: 12px 16px;
+  overflow-x: auto;
+  margin-top: 10px;
+  line-height: 1.75;
+}
+
+pre .path { color: var(--color-accent-fg); }
+
+.alert {
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  margin-top: 12px;
+  border-left: 4px solid;
+  display: flex;
+  gap: 8px;
+}
+
+.alert-icon { flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+.alert.note { background: var(--color-accent-subtle); border-color: var(--color-accent-emphasis); color: var(--color-fg-muted); }
+.alert.note .alert-icon { color: var(--color-accent-fg); }
+
+.alert.warning { background: var(--color-attention-subtle); border-color: var(--color-attention-fg); color: var(--color-fg-muted); }
+.alert.warning .alert-icon { color: var(--color-attention-fg); }
+
+.alert.caution { background: var(--color-danger-subtle); border-color: var(--color-danger-emphasis); color: var(--color-fg-muted); }
+.alert.caution .alert-icon { color: var(--color-danger-fg); }
+
+.alert.tip { background: var(--color-success-subtle); border-color: var(--color-success-fg); color: var(--color-fg-muted); }
+.alert.tip .alert-icon { color: var(--color-success-fg); }
+
+.ul {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-left: 4px;
+}
+
+.li {
+  display: flex;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--color-fg-muted);
+  line-height: 1.5;
+}
+
+.li::before {
+  content: '•';
+  color: var(--color-fg-subtle);
+  flex-shrink: 0;
+  width: 8px;
+  margin-top: 1px;
+}
+
+.info-card {
+  background: var(--color-canvas-subtle);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.info-card h4 {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-fg-muted);
+  margin-bottom: 10px;
+}
+
+.overview-rows { display: flex; flex-direction: column; gap: 8px; }
+.overview-row { display: flex; align-items: baseline; gap: 10px; font-size: 13px; }
+.or-num { font-family: var(--font-mono); font-size: 11px; color: var(--color-fg-subtle); width: 16px; flex-shrink: 0; }
+.or-title { color: var(--color-fg-default); font-weight: 500; }
+.or-sep { color: var(--color-fg-subtle); }
+.or-desc { color: var(--color-fg-muted); }
+
+.dllist { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.dlitem { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; background: var(--color-canvas-subtle); border: 1px solid var(--color-border-muted); border-radius: var(--radius); font-size: 13px; }
+.dlitem-icon { color: var(--color-fg-subtle); margin-top: 2px; flex-shrink: 0; }
+.dlname { color: var(--color-fg-default); font-weight: 500; }
+.dlsub { color: var(--color-fg-muted); font-size: 12px; margin-top: 2px; }
+.dlsub a { color: var(--color-accent-fg); font-family: var(--font-mono); font-size: 11px; }
+
+.itag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+.itag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 2em;
+  display: inline-block;
+}
+.itag.pass { background: var(--color-success-subtle); border: 1px solid var(--color-success-muted); color: var(--color-success-fg); }
+.itag.ok   { background: var(--color-attention-subtle); border: 1px solid var(--color-attention-muted); color: var(--color-attention-fg); }
+
+.ctable { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
+.ctable th { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-fg-muted); padding: 6px 12px; text-align: left; border-bottom: 1px solid var(--color-border-default); background: var(--color-canvas-subtle); }
+.ctable td { padding: 8px 12px; border-bottom: 1px solid var(--color-border-muted); color: var(--color-fg-muted); }
+.ctable td:first-child { color: var(--color-fg-default); font-weight: 500; }
+.ctable tr:last-child td { border-bottom: none; }
+
+.credits-list { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
+.credit { display: flex; gap: 12px; font-size: 13px; padding: 8px 12px; border-radius: var(--radius); }
+.credit:hover { background: var(--color-canvas-subtle); }
+.c-handle { font-family: var(--font-mono); font-size: 12px; color: var(--color-accent-fg); flex-shrink: 0; width: 130px; }
+.c-desc { color: var(--color-fg-muted); }
+
+.xda-box {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--color-canvas-subtle);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius);
+  font-size: 13px;
+}
+.xda-box p { color: var(--color-fg-muted); }
+.xda-box p + p { margin-top: 6px; }
+
+.btn-fw {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-accent-emphasis);
+  color: #fff;
+  border: 1px solid rgba(240,246,252,0.1);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  margin-top: 12px;
+  transition: background 0.1s;
+}
+.btn-fw:hover { background: #388bfd; }
+
+.fw-result {
+  display: none;
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: var(--color-canvas-subtle);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius);
+  font-size: 13px;
+}
+.fw-result.show { display: block; }
+.fw-title { color: var(--color-fg-default); font-weight: 600; margin-bottom: 4px; }
+.fw-link { margin-bottom: 6px; }
+.fw-note { color: var(--color-fg-muted); white-space: pre-line; font-size: 12.5px; line-height: 1.6; }
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(1,4,9,0.8);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.modal-overlay.open { display: flex; }
+
+.modal {
+  background: var(--color-canvas-subtle);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 540px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.modal-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-fg-default);
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--color-fg-muted);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+.modal-close:hover { color: var(--color-fg-default); }
+
+.modal-search {
+  width: 100%;
+  background: var(--color-canvas-inset);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius);
+  color: var(--color-fg-default);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 7px 12px;
+  margin-bottom: 10px;
+  outline: none;
+}
+.modal-search:focus { border-color: var(--color-accent-emphasis); }
+.modal-search::placeholder { color: var(--color-fg-subtle); }
+
+.device-list { display: flex; flex-direction: column; gap: 4px; }
+
+.device-btn {
+  background: var(--color-canvas-default);
+  border: 1px solid var(--color-border-muted);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  width: 100%;
+  transition: border-color 0.1s, background 0.1s;
+}
+.device-btn:hover { border-color: var(--color-border-default); background: var(--color-canvas-subtle); }
+.device-name { font-size: 13px; color: var(--color-fg-default); font-weight: 500; }
+.device-sub { font-size: 11px; color: var(--color-fg-muted); }
+
+.device-btn.other { border-color: var(--color-accent-muted); }
+.device-btn.other .device-name { color: var(--color-accent-fg); }
+
+.modal-divider { height: 1px; background: var(--color-border-muted); margin: 8px 0; }
+
+footer {
+  border-top: 1px solid var(--color-border-muted);
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--color-fg-muted);
+}
+
+@media (max-width: 680px) {
+  .page { grid-template-columns: 1fr; padding: 0 16px 48px; }
+  .sidebar { display: none; }
+  header { padding: 24px 16px 16px; }
+  footer { padding: 16px; }
+  h1 { font-size: 22px; }
+}
+
+.pre-wrap {
+  position: relative;
+}
+
+.pre-wrap pre {
+  margin-top: 0;
+  padding-right: 48px;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--color-canvas-subtle);
+  border: 1px solid var(--color-border-default);
+  border-radius: 4px;
+  color: var(--color-fg-muted);
+  font-family: inherit;
+  font-size: 11px;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s, border-color 0.1s;
+  line-height: 1.5;
+}
+
+.copy-btn:hover {
+  background: var(--color-border-default);
+  color: var(--color-fg-default);
+}
+
+.copy-btn.copied {
+  border-color: var(--color-success-fg);
+  color: var(--color-success-fg);
+}
+</style>
+</head>
+<body>
+
+<div class="top-banner">For educational purposes only &nbsp;&middot;&nbsp; Tested on Nothing Phone (4a) Pro &middot; Android 14&ndash;16 &middot; Proceed at your own risk</div>
+
+<header>
+  <p class="breadcrumb">Android 14&ndash;16 &middot; Magisk Root Guide</p>
+  <h1>Rooting Android & Getting Google Wallet Back</h1>
+  <p class="subtitle">A step-by-step guide to rooting with Magisk, and restoring Google Wallet after root breaks it. Written from a real run-through on the Nothing Phone (4a) Pro. Should work on most Android phones running Android 14 through 16.</p>
+  <div class="label-row">
+    <span class="label label-purple">by 396abc</span>
+    <span class="label label-blue">Android 14&ndash;16</span>
+    <span class="label label-blue">Magisk</span>
+    <span class="label label-gray">Open Source</span>
+  </div>
+</header>
+
+<div class="modal-overlay" id="fwModal">
+  <div class="modal">
+    <div class="modal-title">
+      Get firmware for your device
+      <button class="modal-close" onclick="closeModal()">&#10005;</button>
+    </div>
+    <input class="modal-search" type="text" placeholder="Search your phone model..." id="deviceSearch" oninput="filterDevices()">
+    <div class="device-list" id="deviceList"></div>
+  </div>
+</div>
+
+<div class="page">
+<aside class="sidebar">
+  <div class="nav-group">
+    <p class="nav-group-label">Before You Start</p>
+    <div class="nav-links">
+      <a class="nav-link" href="#overview">Overview</a>
+      <a class="nav-link" href="#side-effects">Side Effects</a>
+      <a class="nav-link" href="#backup">Back Up First</a>
+      <a class="nav-link" href="#requirements">Requirements</a>
+    </div>
+  </div>
+  <div class="nav-group">
+    <p class="nav-group-label">Part 1 &mdash; Root</p>
+    <div class="nav-links">
+      <a class="nav-link" href="#s1">Step 1. ADB Setup</a>
+      <a class="nav-link" href="#s2">Step 2. Fastboot Driver</a>
+      <a class="nav-link" href="#s3">Step 3. Firmware</a>
+      <a class="nav-link" href="#s4">Step 4. Unlock Bootloader</a>
+      <a class="nav-link" href="#s5">Step 5. Patch init_boot</a>
+      <a class="nav-link" href="#s6">Step 6. Flash & Boot</a>
+      <a class="nav-link" href="#s7">Step 7. Zygisk</a>
+    </div>
+  </div>
+  <div class="nav-group">
+    <p class="nav-group-label">Part 2 &mdash; What You Can Do</p>
+    <div class="nav-links">
+      <a class="nav-link" href="#s8">Step 1. ReLSposed</a>
+      <a class="nav-link" href="#s9">Step 2. ReVanced</a>
+    </div>
+  </div>
+  <div class="nav-group">
+    <p class="nav-group-label">Part 3 &mdash; Google Wallet</p>
+    <div class="nav-links">
+      <a class="nav-link" href="#s10">Step 1. Downloads</a>
+      <a class="nav-link" href="#s11">Step 2. DenyList</a>
+      <a class="nav-link" href="#s12">Step 3. Flash Modules</a>
+      <a class="nav-link" href="#s13">Step 4. Reboot</a>
+      <a class="nav-link" href="#s15">Step 5. Tricky Store</a>
+      <a class="nav-link" href="#s16">Step 6. Verify</a>
+      <a class="nav-link" href="#s17">Step 7. Activate Wallet</a>
+    </div>
+  </div>
+  <div class="nav-group">
+    <p class="nav-group-label">End</p>
+    <div class="nav-links">
+      <a class="nav-link" href="#credits">Credits</a>
+    </div>
+  </div>
+</aside>
+
+<main class="content">
+
+<div class="section" id="overview">
+  <div class="section-label">Overview</div>
+  <h2>What this guide covers</h2>
+  <p class="section-desc">Three parts. Part 1 is required. Parts 2 and 3 build on it independently.</p>
+  <div class="info-card">
+    <h4>Guide structure</h4>
+    <div class="overview-rows">
+      <div class="overview-row">
+        <span class="or-num">1.</span>
+        <span class="or-title">Root</span>
+        <span class="or-sep">&mdash;</span>
+        <span class="or-desc">ADB, unlock bootloader, patch boot image, install Magisk and Zygisk</span>
+      </div>
+      <div class="overview-row">
+        <span class="or-num">2.</span>
+        <span class="or-title">What you can do with root</span>
+        <span class="or-sep">&mdash;</span>
+        <span class="or-desc">ReLSposed Xposed framework, ReVanced for patching Spotify and YouTube</span>
+      </div>
+      <div class="overview-row">
+        <span class="or-num">3.</span>
+        <span class="or-title">Google Wallet</span>
+        <span class="or-sep">&mdash;</span>
+        <span class="or-desc">Restore contactless payments and any banking apps blocked by root</span>
+      </div>
+    </div>
+  </div>
+  <div class="alert tip">
+    <span class="alert-icon">&#10003;</span>
+    <span>Everything in this guide is free and open source. Magisk, TrickyStore, ReLSposed, ReVanced, all of it has public source code on GitHub. Nothing shady, no random APKs from forums.</span>
+  </div>
+</div>
+
+<div class="section" id="side-effects">
+  <div class="section-label">Before You Start</div>
+  <h2>What rooting actually does to your phone</h2>
+  <p class="section-desc">Worth reading before you start, especially the first two points.</p>
+  <div class="ul">
+    <div class="li">Unlocking the bootloader wipes the phone completely. Android enforces this, there is no way around it. Back everything up first.</div>
+    <div class="li">Over-the-air system updates will stop working. When a new OS version drops, you will need to flash it manually, which also wipes Magisk and means you will need to re-root.</div>
+    <div class="li">Google Wallet and tap-to-pay stop working immediately after root. Part 3 of this guide fixes that, though it needs a quick re-run occasionally when Google updates its integrity checks.</div>
+    <div class="li">Most banking apps keep working once you configure Magisk's DenyList. Stricter apps that still fail are also fixed by Part 3, which makes the device look clean to Google.</div>
+    <div class="li">A handful of apps with strict DRM, like Netflix HD or Spotify offline, may lose access or drop to lower quality.</div>
+    <div class="li">Unlocking the bootloader generally voids the manufacturer warranty.</div>
+  </div>
+</div>
+
+<div class="section" id="backup">
+  <div class="section-label">Before You Start</div>
+  <h2>Back up before you do anything</h2>
+  <p class="section-desc">The bootloader unlock wipes the phone completely. Cover these bases first.</p>
+  <div class="ul">
+    <div class="li"><strong>Photos and videos.</strong> Google Photos auto-sync is easiest, or just copy the DCIM folder to your PC.</div>
+    <div class="li"><strong>Contacts.</strong> These should already be synced to your Google account, but open the Contacts app and check there is nothing sitting locally only.</div>
+    <div class="li"><strong>App data.</strong> Settings &rarr; System &rarr; Backup covers most things. Apps without cloud sync, games, note apps, etc., you will lose progress on.</div>
+    <div class="li"><strong>Two-factor auth codes.</strong> This is the one people forget. If you use Google Authenticator, export your accounts before wiping. Losing 2FA codes can lock you out of accounts with no recovery path.</div>
+    <div class="li"><strong>Google Wallet cards.</strong> Make a note of what you have saved. You will re-add them manually after Part 3.</div>
+  </div>
+  <div class="alert caution" style="margin-top:12px;">
+    <span class="alert-icon">&#9888;</span>
+    <span>Once you run the unlock command the phone wipes immediately. No confirmation screen will save you if you did not back up.</span>
+  </div>
+</div>
+
+<div class="section" id="requirements">
+  <div class="section-label">Before You Start</div>
+  <h2>What you will need</h2>
+  <div class="ul">
+    <div class="li">An Android phone on Android 14, 15, or 16 with an unlockable bootloader. Written and tested on the Nothing Phone (4a) Pro running NothingOS 4.1.</div>
+    <div class="li">A Windows PC. The commands use PowerShell syntax. If you are on Mac or Linux, swap the <code>.\</code> prefix for <code>./</code>.</div>
+    <div class="li"><a href="https://developer.android.com/tools/releases/platform-tools" target="_blank">Android Platform Tools</a> from Google. This is what gives you the <code>adb</code> and <code>fastboot</code> commands.</div>
+    <div class="li"><a href="https://developer.android.com/studio/run/win-usb" target="_blank">Google USB Driver</a>. Windows needs this to recognise your phone when it is in fastboot mode.</div>
+    <div class="li">The stock firmware ZIP for your phone, matching your exact current build. Step 3 explains how to find it.</div>
+    <div class="li"><a href="https://github.com/topjohnwu/Magisk/releases" target="_blank">Magisk APK</a>. Grab the latest stable release from GitHub, not from third-party sites.</div>
+    <div class="li">A USB cable that carries data, not just power. A lot of cheap cables are charge-only and will not work with ADB.</div>
+    <div class="li">A completed backup. Seriously, see the section above.</div>
+  </div>
+</div>
+
+<div class="section" id="s1">
+  <div class="section-label">Part 1 &mdash; Root with Magisk</div>
+  <h2>Installing Magisk</h2>
+  <p class="section-desc">Seven steps: get ADB working, unlock the bootloader, patch the boot image, flash it back, done.</p>
+
+  <div class="step">
+    <div class="step-header">
+      <span class="step-num">1</span>
+      <h3>Getting ADB working</h3>
+    </div>
+    <div class="step-body">
+      <p>Download <a href="https://developer.android.com/tools/releases/platform-tools" target="_blank">Android Platform Tools</a> from Google and unzip it somewhere easy to find, like <code>C:\platform-tools</code>. Inside you will find <code>adb.exe</code> and <code>fastboot.exe</code>, the two tools you will use throughout this guide.</p>
+      <p>Open PowerShell inside that folder. Quickest way: Shift + right-click anywhere inside the folder, then choose <em>Open PowerShell window here</em>. Because Windows does not put ADB in your system PATH automatically, you need to prefix every command with <code>.\</code>. So instead of typing <code>adb devices</code>, you type <code>.\adb devices</code>.</p>
+      <p>On your phone, go to <strong>Settings &rarr; About phone &rarr; Build number</strong> and tap it seven times. You will see a message saying developer mode is enabled. Head to <strong>Settings &rarr; Developer options</strong> and turn on <strong>USB Debugging</strong>.</p>
+      <p>Connect the phone via USB and run:</p>
+      <pre>.\adb devices</pre>
+      <p>Your phone will show a popup asking if you want to allow the connection. Tap Allow. The command should now print your device serial number. If it says <em>unauthorized</em>, hit Allow on the phone again.</p>
+    </div>
+  </div>
+
+  <div class="step" id="s2">
+    <div class="step-header">
+      <span class="step-num">2</span>
+      <h3>Getting Windows to recognise fastboot</h3>
+    </div>
+    <div class="step-body">
+      <p>Send the phone into fastboot mode:</p>
+      <pre>.\adb reboot bootloader</pre>
+      <p>The screen goes minimal, usually black with white text or a logo. Run:</p>
+      <pre>.\fastboot devices</pre>
+      <p>If nothing shows up, Windows is missing the fastboot driver. This is normal and easy to fix.</p>
+      <div class="alert warning">
+        <span class="alert-icon">&#9888;</span>
+        <span>Open <strong>Device Manager</strong> (Win + X &rarr; Device Manager). You will see an unrecognised device, probably under "Other devices". Right-click it &rarr; <strong>Update driver &rarr; Browse my computer for drivers &rarr; Let me pick from a list</strong>. Browse to the <a href="https://developer.android.com/studio/run/win-usb" target="_blank">Google USB Driver</a> folder, select <code>android_winusb.inf</code>, and choose <strong>Android Bootloader Interface</strong> from the list.</span>
+      </div>
+      <p style="margin-top:10px;">Run <code>.\fastboot devices</code> again. Your phone serial number should appear this time.</p>
+    </div>
+  </div>
+
+  <div class="step" id="s3">
+    <div class="step-header">
+      <span class="step-num">3</span>
+      <h3>Downloading your phone's firmware</h3>
+    </div>
+    <div class="step-body">
+      <p>Magisk works by patching your phone's boot image and flashing it back. To do that, you need a copy of the stock firmware matching your exact current build. Grab the wrong version and you will bootloop.</p>
+      <p>Your build number is at <strong>Settings &rarr; About phone &rarr; Build number</strong>. Note it down exactly before downloading anything.</p>
+      <button class="btn-fw" onclick="openModal()">&#128230; Get firmware for my phone</button>
+      <div class="fw-result" id="fwResult">
+        <div class="fw-title" id="fwDeviceName"></div>
+        <div class="fw-link"><a id="fwLink" href="#" target="_blank"></a></div>
+        <div class="fw-note" id="fwNote"></div>
+      </div>
+      <div class="alert note" style="margin-top:12px;">
+        <span class="alert-icon">&#8505;</span>
+        <span>Once downloaded, verify the file: <code>certutil -hashfile firmware.zip SHA256</code> in PowerShell. Compare the output to the checksum on the download page. If they match, the file is fine.</span>
+      </div>
+      <p style="margin-top:10px;">Extract the ZIP. You are looking for two files:</p>
+      <div class="ul" style="margin-top:8px;">
+        <div class="li"><code>init_boot.img</code> &mdash; what Magisk patches on Android 13 and newer devices</div>
+        <div class="li"><code>boot.img</code> &mdash; older devices use this instead</div>
+      </div>
+      <div class="alert note" style="margin-top:10px;">
+        <span class="alert-icon">&#8505;</span>
+        <span>Most phones running Android 13 or newer use <code>init_boot.img</code>. If you are not sure, check the XDA thread for your device.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="step" id="s4">
+    <div class="step-header">
+      <span class="step-num">4</span>
+      <h3>Unlocking the bootloader</h3>
+    </div>
+    <div class="step-body">
+      <div class="alert caution">
+        <span class="alert-icon">&#9888;</span>
+        <span>Stop here if you have not backed up. This wipes everything.</span>
+      </div>
+      <p style="margin-top:10px;">With the phone still in fastboot mode, run:</p>
+      <pre>.\fastboot flashing unlock</pre>
+      <p>Use the volume keys to select <strong>Unlock the bootloader</strong> and confirm with the power button. The phone wipes itself and reboots. From now on you will see a warning screen on every boot. That is just what an unlocked bootloader looks like, it is not a problem.</p>
+      <p>Go through the setup process again. You only need to get as far as having Wi-Fi and a working phone. Do not worry about restoring everything yet.</p>
+    </div>
+  </div>
+
+  <div class="step" id="s5">
+    <div class="step-header">
+      <span class="step-num">5</span>
+      <h3>Patching the boot image</h3>
+    </div>
+    <div class="step-body">
+      <p>Copy the <code>init_boot.img</code> from your PC to the phone. Adjust the path on the left to wherever you extracted the firmware:</p>
+      <pre>.\adb push <span class="path">C:\firmware\init_boot.img</span> /storage/emulated/0/Download/init_boot.img</pre>
+      <p>Install Magisk on the phone. Either download it directly in the phone's browser from the <a href="https://github.com/topjohnwu/Magisk/releases" target="_blank">GitHub releases page</a>, or push it via ADB:</p>
+      <pre>.\adb install <span class="path">C:\Downloads\Magisk.apk</span></pre>
+      <p>Open Magisk, tap <strong>Install</strong> next to the Magisk row, then <strong>Select and Patch a File</strong>. Open Downloads and select <code>init_boot.img</code>. Magisk will patch it and save the result to <code>/storage/emulated/0/Download/</code> with a name like <code>magisk_patched_[random].img</code>. Pull it back to your PC:</p>
+      <pre>.\adb pull /storage/emulated/0/Download/magisk_patched_*.img <span class="path">C:\platform-tools\</span></pre>
+      <p>You should end up with something like <code>magisk_patched_abc123.img</code> sitting in <code>C:\platform-tools</code>.</p>
+      <div class="alert note">
+        <span class="alert-icon">&#8505;</span>
+        <span>If the pull command errors, open your phone's Files app and check Downloads. The file saves to <code>/storage/emulated/0/Download/</code> and should be there.</span>
+      </div>
+      <p style="margin-top:10px;">Before flashing, quickly check you are on the right slot and that the partition exists:</p>
+      <pre>.\fastboot getvar current-slot
+.\fastboot getvar has-slot:init_boot</pre>
+      <p><code>current-slot</code> should say <strong>a</strong>. <code>has-slot:init_boot</code> should say <strong>yes</strong>. If it comes back as <em>no</em>, your device uses <code>boot.img</code> instead. Run the same process with <code>boot.img</code> and replace <code>init_boot</code> with <code>boot</code> in the flash command.</p>
+    </div>
+  </div>
+
+  <div class="step" id="s6">
+    <div class="step-header">
+      <span class="step-num">6</span>
+      <h3>Flashing the patched image</h3>
+    </div>
+    <div class="step-body">
+      <p>Get back to fastboot if you are not already there:</p>
+      <pre>.\adb reboot bootloader</pre>
+      <p>Flash the patched file. The wildcard in the filename should match automatically:</p>
+      <pre>.\fastboot flash init_boot <span class="path">C:\platform-tools\</span>magisk_patched_*.img</pre>
+      <p>If your device uses <code>boot</code> instead, change <code>init_boot</code> in that command accordingly. Then reboot:</p>
+      <pre>.\fastboot reboot</pre>
+      <p>Let the phone boot all the way into Android, then open Magisk. If the top row shows <strong>Installed</strong> with a version number, you are done.</p>
+      <div class="alert tip">
+        <span class="alert-icon">&#10003;</span>
+        <span>Magisk is installed and root is working. That is the hard part out of the way.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="step" id="s7">
+    <div class="step-header">
+      <span class="step-num">7</span>
+      <h3>Turning on Zygisk</h3>
+    </div>
+    <div class="step-body">
+      <p>In Magisk settings (top right), toggle Zygisk on and reboot. Zygisk is what lets modules like ReLSposed and TrickyStore hook into the system. Both Part 2 and Part 3 need it.</p>
+      <div class="alert note">
+        <span class="alert-icon">&#8505;</span>
+        <span>Root is done. Head to Part 2 to see what you can actually do with it, or skip to Part 3 if getting Google Wallet back is the priority.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s8">
+  <div class="section-label">Part 2 &mdash; What You Can Do With Root</div>
+  <h2>LSReposed & ReVanced</h2>
+  <p class="section-desc">Root on its own does not do much visibly. This is one of the more useful things you can do with it. ReLSposed is the Xposed framework: it lets modules reach inside running apps and change how they behave, without touching the APK. ReVanced is built on top of that and lets you patch apps like Spotify and YouTube to remove ads, unlock features, and so on. There are hundreds of other Xposed modules if you want to explore further.</p>
+
+  <div class="step">
+    <div class="step-header">
+      <span class="step-num">1</span>
+      <h3>Installing ReLSposed</h3>
+    </div>
+    <div class="step-body">
+      <p>The original <a href="https://github.com/LSPosed/LSPosed" target="_blank">LSPosed</a> is no longer updated and does not work on Android 16. The maintained fork is <a href="https://github.com/JingMatrix/Vector/releases" target="_blank">JingMatrix/Vector</a>, which goes up to Android 16 and is what you want here.</p>
+      <p>Download the latest stable ZIP from that page. In Magisk, go to <strong>Modules &rarr; Install from storage</strong>, select the ZIP, and reboot. After rebooting, install the manager APK from the same release. You will get a persistent notification in your status bar. Tap that to open the manager.</p>
+      <div class="alert note">
+        <span class="alert-icon">&#8505;</span>
+        <span>The project was renamed from LSPosed to Vector during a rewrite. If other guides refer to it as LSReposed or ReLSposed, they mean this. Stick to stable releases rather than debug or CI builds.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="step" id="s9">
+    <div class="step-header">
+      <span class="step-num">2</span>
+      <h3>Patching Spotify with ReVanced</h3>
+    </div>
+    <div class="step-body">
+      <p>Install <a href="https://github.com/ReVanced/revanced-manager/releases" target="_blank">ReVanced Manager</a> from GitHub. One thing to know upfront: ReVanced patches target a specific version of each app. The latest Spotify from the Play Store almost certainly will not match, so you will need an older build from <a href="https://www.apkmirror.com/apk/spotify-ab/spotify/" target="_blank">APKMirror</a>.</p>
+      <div class="ul" style="margin-top:10px;">
+        <div class="li">Open ReVanced Manager, select Spotify, and look at the patch notes to confirm the supported version. At the time of writing, <strong>v9.1.68.1874</strong> was the working version.</div>
+        <div class="li">Find that version on APKMirror. Pick the variant with a shield icon (APKMirror-signed), meaning it has not been modified since leaving the developer.</div>
+        <div class="li">If you have a newer version of Spotify installed, uninstall it first. Then install the APKMirror version.</div>
+        <div class="li">Back in ReVanced Manager, select Spotify, hit Patch, let it run, then install the result.</div>
+      </div>
+      <div class="alert note">
+        <span class="alert-icon">&#8505;</span>
+        <span>If something goes wrong, Magisk's log console will show you exactly what failed. Nine times out of ten it is a version mismatch. Double-check you are using the version ReVanced Manager is expecting.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s10">
+  <div class="section-label">Part 3 &mdash; Google Wallet</div>
+  <h2>Getting Google Wallet working again</h2>
+  <p class="section-desc">When you root, Google detects it through Play Integrity and marks the device as untrusted, which kills contactless payments and blocks some stricter banking apps. This section walks through making the device appear clean again so Wallet and everything else starts working.</p>
+
+  <div class="alert caution" style="margin-bottom:12px;">
+    <span class="alert-icon">&#9888;</span>
+    <span><strong>Compatibility note:</strong> Tricky Addon Enhanced does not currently work on the Nothing Phone (4a) Pro and likely other Nothing phones as of August 2026. Stick to the standard Tricky Store Addon. If you experiment with alternative addons or layer multiple tools on top of each other without knowing exactly what each one does, you risk ending up with a broken integrity setup that requires a full firmware reflash to recover from. Follow these instructions as written before trying anything more advanced.</span>
+  </div>
+
+  <div class="alert tip" style="margin-bottom:12px;">
+    <span class="alert-icon">&#10003;</span>
+    <span>This is not just a Wallet fix. Getting your device to pass Play Integrity at DEVICE or STRONG level sorts out any app that was blocking you due to root, banking apps, payment apps, certain streaming services. Anything that does a full integrity check gets fixed here.</span>
+  </div>
+  </div>
+
+  <div class="alert warning" style="margin-bottom:16px;">
+    <span class="alert-icon">&#9888;</span>
+    <span>One thing worth knowing: by spoofing integrity, you are telling Google your device is clean and unmodified. That is the point, and it is what makes everything work. It also means Google's own protections cannot flag anything that tries to exploit root. Be sensible about what you install.</span>
+  </div>
+
+  <div class="alert note" style="margin-bottom:16px;">
+    <span class="alert-icon">&#8505;</span>
+    <span>If you run into issues with Part 3, the <a href="https://xdaforums.com/t/fix-root-google-wallet-root-fix-strong-integrity-magisk-playintegrityfork-android-12-16.4753880/#post-90228451" target="_blank">XDA thread by Arkl1ne</a> has an active comments section with community solutions for a range of problems people have run into.</span>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <span class="step-num">1</span>
+      <h3>What to download</h3>
+    </div>
+    <div class="step-body">
+      <p>Grab all of these before you start. A couple of the steps require reboots and you do not want to be halfway through downloading something when that happens.</p>
+      <div class="dllist">
+        <div class="dlitem">
+          <span class="dlitem-icon">&#128229;</span>
+          <div>
+            <div class="dlname">Play Integrity API Checker</div>
+            <div class="dlsub">Search "Play Integrity API Checker" on the Play Store. Any version works.</div>
+          </div>
+        </div>
+        <div class="dlitem">
+          <span class="dlitem-icon">&#128229;</span>
+          <div>
+            <div class="dlname">KsuWebUI Standalone <span style="font-weight:400;color:var(--color-fg-muted);">(APK)</span></div>
+            <div class="dlsub"><a href="https://github.com/KOWX712/KsuWebUIStandalone/releases" target="_blank">github.com/KOWX712/KsuWebUIStandalone</a></div>
+          </div>
+        </div>
+        <div class="dlitem">
+          <span class="dlitem-icon">&#128229;</span>
+          <div>
+            <div class="dlname">Tricky Store <span style="font-weight:400;color:var(--color-fg-muted);">(Magisk module ZIP)</span></div>
+            <div class="dlsub"><a href="https://github.com/5ec1cff/TrickyStore/releases" target="_blank">github.com/5ec1cff/TrickyStore</a></div>
+          </div>
+        </div>
+        <div class="dlitem">
+          <span class="dlitem-icon">&#128229;</span>
+          <div>
+            <div class="dlname">Tricky Store Addon <span style="font-weight:400;color:var(--color-fg-muted);">(Magisk module ZIP)</span></div>
+            <div class="dlsub"><a href="https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases" target="_blank">github.com/KOWX712/Tricky-Addon-Update-Target-List</a> &mdash; v4.4 or newer works</div>
+          </div>
+        </div>
+        <div class="dlitem">
+          <span class="dlitem-icon">&#128229;</span>
+          <div>
+            <div class="dlname">Anti-Bootloop, optional but recommended <span style="font-weight:400;color:var(--color-fg-muted);">(Magisk module ZIP)</span></div>
+            <div class="dlsub"><a href="https://github.com/Magisk-Modules-Alt-Repo/abootloop/releases/tag/v1.3.4" target="_blank">github.com/Magisk-Modules-Alt-Repo/abootloop v1.3.4</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step" id="s11">
+    <div class="step-header">
+      <span class="step-num">2</span>
+      <h3>Setting up Magisk's DenyList</h3>
+    </div>
+    <div class="step-body">
+      <p>Open Magisk settings (top right icon) and make sure these are enabled:</p>
+      <div class="ul" style="margin-top:8px;">
+        <div class="li">Zygisk (should already be on from Part 1 Step 7)</div>
+        <div class="li">Magisk Hide</div>
+        <div class="li">Enforce DenyList</div>
+      </div>
+      <p style="margin-top:10px;">Go to <strong>Configure DenyList</strong> and add these apps. After adding each one, tap the app name to expand it and tick all the sub-processes underneath. There is a blue bar that runs across the top of each entry and it needs to go all the way to the right edge. If it is only partial, some of that app's processes are still visible to root checks.</p>
+      <div class="ul" style="margin-top:8px;">
+        <div class="li">Google Play Services</div>
+        <div class="li">Google Wallet</div>
+        <div class="li">Google Play Store</div>
+        <div class="li">Google Services Framework. It appears in the list, but if it refuses to let you tick it that is fine, just skip it.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step" id="s12">
+    <div class="step-header">
+      <span class="step-num">3</span>
+      <h3>Installing the modules</h3>
+    </div>
+    <div class="step-body">
+      <p>In Magisk, go to <strong>Modules &rarr; Install from storage</strong> and flash these one by one:</p>
+      <div class="ul" style="margin-top:8px;">
+        <div class="li">Tricky Store</div>
+        <div class="li">Tricky Store Addon (v4.4 or newer)</div>
+        <div class="li">Anti-Bootloop, optional but recommended</div>
+      </div>
+      <p style="margin-top:10px;">No need to reboot between each one. Flash them all, then reboot once at the end.</p>
+      <div class="alert note">
+        <span class="alert-icon">&#8505;</span>
+        <span>If Anti-Bootloop is installed and you get stuck in a bootloop, the recovery combo is <code>Vol&minus;</code> &rarr; <code>Vol+</code> &rarr; <code>Vol&minus;</code> &rarr; <code>Vol&minus;</code> &rarr; <code>Vol+</code>. If that does not work, hold both volume buttons while powering on.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="step" id="s13">
+    <div class="step-header">
+      <span class="step-num">4</span>
+      <h3>Reboot</h3>
+    </div>
+    <div class="step-body">
+      <p>Reboot the phone. The modules will not do anything until the first proper boot after flashing, so this step actually matters.</p>
+    </div>
+  </div>
+
+  <div class="step" id="s15">
+    <div class="step-header">
+      <span class="step-num">5</span>
+      <h3>Configuring Tricky Store</h3>
+    </div>
+    <div class="step-body">
+      <p>Open <strong>KsuWebUI</strong> and tap into <strong>Tricky Store</strong>. Do these in order:</p>
+      <div class="ul" style="margin-top:8px;">
+        <div class="li"><strong>Menu &rarr; Select All</strong>, then deselect anything that does not need integrity spoofing, games, social media, that kind of thing.</div>
+        <div class="li">Tap <strong>Save</strong>.</div>
+        <div class="li"><strong>Menu &rarr; Keybox &rarr; Repository</strong>. Pick any entry shown in green. Green means it has not been revoked by Google yet.</div>
+        <div class="li"><strong>Menu &rarr; Set Security Patch &rarr; Get Security Patch Date &rarr; Save</strong>. In newer versions of the addon (v5.0+) this option is called <strong>Set Default Policy</strong> instead.</div>
+      </div>
+      <div class="alert warning" style="margin-top:12px;">
+        <span class="alert-icon">&#9888;</span>
+        <span>Red entries are revoked and will not work. If everything is red, just wait a few days since new keyboxes show up regularly. Keyboxes get patched by Google roughly every 2 to 3 weeks. When Wallet stops working, just re-run step 5 to pick a fresh green keybox and you will be back up.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="step" id="s16">
+    <div class="step-header">
+      <span class="step-num">6</span>
+      <h3>Checking integrity</h3>
+    </div>
+    <div class="step-body">
+      <p>Open the Play Integrity checker app and run a check. You are looking for one of these:</p>
+      <div class="itag-row">
+        <span class="itag pass">MEETS_STRONG_INTEGRITY &#10003;</span>
+        <span class="itag ok">MEETS_DEVICE_INTEGRITY &mdash; acceptable</span>
+      </div>
+      <p style="margin-top:10px;">DEVICE_INTEGRITY is enough for Wallet in most places. BASIC_INTEGRITY only means something went wrong. Go back to step 5 and try a different keybox.</p>
+    </div>
+  </div>
+
+  <div class="step" id="s17">
+    <div class="step-header">
+      <span class="step-num">7</span>
+      <h3>Getting Wallet to activate</h3>
+    </div>
+    <div class="step-body">
+      <p>Google caches integrity results on its servers, so even with everything configured correctly Wallet might not activate immediately. Usually it sorts itself out within 24 hours. If you can wait, just leave it.</p>
+      <p>If you need it working now, you can force a refresh by clearing app data. Here is what that affects:</p>
+      <div class="alert warning">
+        <span class="alert-icon">&#9888;</span>
+        <span>Clearing this data signs out every Google account on the device, so have your passwords ready. It also wipes Maps Timeline, removes all Wallet cards, and resets some Play Store settings. Everything comes back once you sign in again.</span>
+      </div>
+      <p style="margin-top:10px;">If you are okay with that: <strong>Settings &rarr; Apps</strong>, then clear storage for each of these:</p>
+      <table class="ctable" style="margin-top:10px;">
+        <thead><tr><th>App</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>Google Wallet</td><td>Clear storage once</td></tr>
+          <tr><td>Google Play Services</td><td>Clear storage <strong>twice</strong></td></tr>
+          <tr><td>Google Play Store</td><td>Clear storage once</td></tr>
+          <tr><td>Google Services Framework</td><td>Clear storage once</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <span class="step-num done">&#10003;</span>
+      <h3>Re-add your cards</h3>
+    </div>
+    <div class="step-body">
+      <p>Wallet should be working now. Open it and add your cards back. Physical bank cards usually need a minute to verify and will send you a code via text. Virtual cards show up almost immediately.</p>
+      <div class="alert note">
+        <span class="alert-icon">&#8505;</span>
+        <span>If Wallet breaks again after a Google update, it is almost always just a patched keybox. Just open KsuWebUI, go to Tricky Store, and pick a new green keybox. This happens roughly every 2 to 3 weeks. Should not take more than a couple of minutes.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="credits">
+  <div class="section-label">Credits</div>
+  <h2>Credits</h2>
+  <p class="section-desc">None of this would exist without the people who built and maintain these tools.</p>
+  <div class="alert tip" style="margin-bottom:12px;">
+    <span class="alert-icon">&#10003;</span>
+    <span>Everything here is open source. If you are curious how any of it works, the code is all on GitHub.</span>
+  </div>
+  <div class="credits-list">
+    <div class="credit"><span class="c-handle">@topjohnwu</span><span class="c-desc"><a href="https://github.com/topjohnwu/Magisk" target="_blank">Magisk</a> &mdash; systemless root, Zygisk, DenyList (GPL-3)</span></div>
+    <div class="credit"><span class="c-handle">@5ec1cff</span><span class="c-desc"><a href="https://github.com/5ec1cff/TrickyStore" target="_blank">Tricky Store</a> & KSU UI &mdash; keybox injection</span></div>
+    <div class="credit"><span class="c-handle">@herzhenr</span><span class="c-desc">SPIC &mdash; Simple Play Integrity Checker</span></div>
+    <div class="credit"><span class="c-handle">Alt-Repo team</span><span class="c-desc"><a href="https://github.com/Magisk-Modules-Alt-Repo/abootloop" target="_blank">Anti Bootloop module</a></span></div>
+    <div class="credit"><span class="c-handle">JingMatrix</span><span class="c-desc"><a href="https://github.com/JingMatrix/Vector" target="_blank">Vector / ReLSposed</a> &mdash; Xposed for Android 16 (GPL-3)</span></div>
+    <div class="credit"><span class="c-handle">ReVanced team</span><span class="c-desc"><a href="https://github.com/ReVanced/revanced-manager" target="_blank">ReVanced Manager</a> &mdash; open source app patching</span></div>
+  </div>
+  <div class="xda-box">
+    <p><strong style="color:var(--color-fg-default);">Original Google Wallet guide by Arkl1ne</strong> &mdash; <a href="https://xdaforums.com/t/fix-root-google-wallet-root-fix-strong-integrity-magisk-playintegrityfork-android-12-16.4753880/#post-90228451" target="_blank">XDA Forums: Root Fix &middot; Strong Integrity &middot; Android 12&ndash;16</a></p>
+    <p>If you are having issues with Part 3 specifically, check the comments on that thread. There are community-contributed solutions for a range of problems that come up.</p>
+  </div>
+</div>
+
+</main>
+</div>
+
+<footer>
+  <span>Tested &middot; Nothing Phone (4a) Pro &middot; NothingOS 4.1 &middot; B4.1_2607231820</span>
+  <span>Guide by 396abc</span>
+</footer>
+
+<script>
+const DEVICES = [
+  { name: "Nothing Phone (4a) Pro",    sub: "NothingOS 4.1 · Snapdragon 7 Gen 4",  url: "https://github.com/spike0en/nothing_archive/releases", note: "Tested on this device (build B4.1_2607231820). Download the build matching Settings > About phone > Build number." },
+  { name: "Nothing Phone (4a)",         sub: "NothingOS 4.1 · Snapdragon 7s Gen 4", url: "https://github.com/spike0en/nothing_archive/releases", note: "Download from spike0en's Nothing Archive. Match your exact build number." },
+  { name: "Nothing Phone (2)",          sub: "NothingOS",                            url: "https://github.com/spike0en/nothing_archive/releases", note: "Download from spike0en's Nothing Archive. Match your exact build number." },
+  { name: "Nothing Phone (1)",          sub: "NothingOS",                            url: "https://github.com/spike0en/nothing_archive/releases", note: "Download from spike0en's Nothing Archive. Match your exact build number." },
+  { name: "Google Pixel",               sub: "Pixel 6 / 7 / 8 / 9 and variants",   url: "https://developers.google.com/android/images",                                    note: "Official Google factory images. Match the Build ID in Settings > About phone > Build number exactly." },
+  { name: "OnePlus / OxygenOS",         sub: "OnePlus 12 / 11 / 10 Pro / Nord",     url: "https://www.oneplus.com/global/support/softwareupgrade",                          note: "Download the ROM matching your region and build. XDA Forums also has firmware threads per device." },
+  { name: "Samsung Galaxy",             sub: "S / A / Z series",                    url: "https://samfw.com/",                                                               note: "Use SamFW for free firmware downloads. You need your model number (e.g. SM-S928B) and CSC region code from Settings > About phone > Software information." },
+  { name: "Xiaomi / Redmi / POCO",      sub: "All MIUI and HyperOS devices",        url: "https://xmfirmwareupdater.com/",                                                   note: "Match your device codename and region (Global / EEA / CN). Check Settings > About phone for your build string." },
+  { name: "Motorola",                   sub: "Edge / G series / Razr",              url: "https://motorola-global-portal.custhelp.com/app/software_upgrade_find_sku",        note: "Use Motorola's official software upgrade tool. Search by device and region." },
+  { name: "Sony Xperia",                sub: "Xperia 1 / 5 / 10 series",           url: "https://developer.sony.com/open-source/aosp-on-xperia-open-devices",               note: "Sony provides open device binaries. Check XDA for the correct package for your model." },
+  { name: "ASUS ROG Phone / Zenfone",   sub: "ROG Phone 8 / Zenfone 11 etc.",      url: "https://www.asus.com/support/",                                                    note: "Search your model on ASUS Support and download from the Driver & Utility section." },
+  { name: "Fairphone",                  sub: "Fairphone 4 / 5",                     url: "https://support.fairphone.com/hc/en-us/articles/10492476238865",                   note: "Fairphone provides manual update packages. Match your Android version and build string." },
+  { name: "Realme",                     sub: "GT / Number series",                  url: "https://www.realme.com/in/support/software-update",                                note: "Match your region and build. Also check XDA for your device's thread." },
+];
+
+function renderDevices(filter) {
+  const list = document.getElementById("deviceList");
+  const q = (filter || "").toLowerCase();
+  list.innerHTML = "";
+
+  DEVICES
+    .filter(d => d.name.toLowerCase().includes(q) || d.sub.toLowerCase().includes(q))
+    .forEach(d => {
+      const btn = document.createElement("button");
+      btn.className = "device-btn";
+      btn.innerHTML = `<span class="device-name">${d.name}</span><span class="device-sub">${d.sub}</span>`;
+      btn.onclick = () => showFW(d);
+      list.appendChild(btn);
+    });
+
+  const divider = document.createElement("div");
+  divider.className = "modal-divider";
+  list.appendChild(divider);
+
+  const other = document.createElement("button");
+  other.className = "device-btn other";
+  other.innerHTML = '<span class="device-name">My phone is not listed</span><span class="device-sub">How to find firmware manually</span>';
+  other.onclick = showOther;
+  list.appendChild(other);
+}
+
+function showFW(d) {
+  closeModal();
+  const res = document.getElementById("fwResult");
+  document.getElementById("fwDeviceName").textContent = d.name;
+  const link = document.getElementById("fwLink");
+  link.href = d.url;
+  link.textContent = d.url.replace("https://", "");
+  document.getElementById("fwNote").textContent = d.note;
+  res.classList.add("show");
+  res.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function showOther() {
+  closeModal();
+  const res = document.getElementById("fwResult");
+  document.getElementById("fwDeviceName").textContent = "Finding firmware for unlisted devices";
+  const link = document.getElementById("fwLink");
+  link.href = "https://xdaforums.com/";
+  link.textContent = "xdaforums.com";
+  document.getElementById("fwNote").textContent = [
+    "1. Go to Settings > About phone > Build number and note the full build string.",
+    "2. Search XDA Forums for your device. Most phones have a dedicated sub-forum with firmware threads.",
+    "3. Alternatively search Google for your device name and build number.",
+    "4. If you have root or a custom recovery, you can pull the image directly:",
+    "   adb pull /dev/block/by-name/init_boot init_boot.img",
+  ].join("\n");
+  res.classList.add("show");
+  res.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function openModal() {
+  document.getElementById("fwModal").classList.add("open");
+  document.getElementById("deviceSearch").value = "";
+  renderDevices("");
+  setTimeout(() => document.getElementById("deviceSearch").focus(), 80);
+}
+
+function closeModal() {
+  document.getElementById("fwModal").classList.remove("open");
+}
+
+function filterDevices() {
+  renderDevices(document.getElementById("deviceSearch").value);
+}
+
+document.getElementById("fwModal").addEventListener("click", e => {
+  if (e.target === e.currentTarget) closeModal();
+});
+
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeModal();
+});
+
+const navLinks = document.querySelectorAll(".nav-link");
+const observed = document.querySelectorAll(".section[id], .step[id]");
+
+const observer = new IntersectionObserver(entries => {
+  for (const entry of entries) {
+    if (!entry.isIntersecting) continue;
+    const link = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+    if (!link) continue;
+    navLinks.forEach(n => n.classList.remove("active"));
+    link.classList.add("active");
+  }
+}, { rootMargin: "-15% 0px -70% 0px", threshold: 0 });
+
+observed.forEach(el => observer.observe(el));
+
+document.querySelectorAll("pre").forEach(pre => {
+  const wrap = document.createElement("div");
+  wrap.className = "pre-wrap";
+  pre.parentNode.insertBefore(wrap, pre);
+  wrap.appendChild(pre);
+
+  const btn = document.createElement("button");
+  btn.className = "copy-btn";
+  btn.textContent = "Copy";
+  btn.onclick = () => {
+    navigator.clipboard.writeText(pre.innerText.trim()).then(() => {
+      btn.textContent = "Copied";
+      btn.classList.add("copied");
+      setTimeout(() => {
+        btn.textContent = "Copy";
+        btn.classList.remove("copied");
+      }, 2000);
+    });
+  };
+  wrap.appendChild(btn);
+});
+
+document.querySelectorAll("code").forEach(el => {
+  el.title = "Click to copy";
+  el.onclick = () => {
+    navigator.clipboard.writeText(el.innerText.trim()).then(() => {
+      el.classList.add("flash");
+      setTimeout(() => el.classList.remove("flash"), 1200);
+    });
+  };
+});
+</script>
+</body>
+</html>
