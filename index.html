@@ -735,7 +735,7 @@ footer {
     <div class="step-body">
       <p>Download <a href="https://developer.android.com/tools/releases/platform-tools" target="_blank">Android Platform Tools</a> from Google and unzip it somewhere easy to find, like <code>C:\platform-tools</code>. Inside you will find <code>adb.exe</code> and <code>fastboot.exe</code>, the two tools you will use throughout this guide.</p>
       <p>Open PowerShell inside that folder. Quickest way: Shift + right-click anywhere inside the folder, then choose <em>Open PowerShell window here</em>. Because Windows does not put ADB in your system PATH automatically, you need to prefix every command with <code>.\</code>. So instead of typing <code>adb devices</code>, you type <code>.\adb devices</code>.</p>
-      <p>On your phone, go to <strong>Settings &rarr; About phone &rarr; Build number</strong> and tap it seven times. You will see a message saying developer mode is enabled. Head to <strong>Settings &rarr; Developer options</strong> and turn on <strong>USB Debugging</strong>.</p>
+      <p>On your phone, go to <strong>Settings &rarr; About phone &rarr; Build number</strong> and tap it seven times. You will see a message saying developer mode is enabled. Head to <strong>Settings &rarr; Developer options</strong> and turn on both <strong>OEM Unlocking</strong> and <strong>USB Debugging</strong>. OEM Unlocking must be enabled before the bootloader unlock command will work.</p>
       <p>Connect the phone via USB and run:</p>
       <pre>.\adb devices</pre>
       <p>Your phone will show a popup asking if you want to allow the connection. Tap Allow. The command should now print your device serial number. If it says <em>unauthorized</em>, hit Allow on the phone again.</p>
@@ -869,7 +869,7 @@ footer {
 
 <div class="section" id="s8">
   <div class="section-label">Part 2 &mdash; What You Can Do With Root</div>
-  <h2>LSReposed & ReVanced</h2>
+  <h2>ReLSposed & ReVanced</h2>
   <p class="section-desc">Root on its own does not do much visibly. This is one of the more useful things you can do with it. ReLSposed is the Xposed framework: it lets modules reach inside running apps and change how they behave, without touching the APK. ReVanced is built on top of that and lets you patch apps like Spotify and YouTube to remove ads, unlock features, and so on. There are hundreds of other Xposed modules if you want to explore further.</p>
 
   <div class="step">
@@ -921,7 +921,6 @@ footer {
   <div class="alert tip" style="margin-bottom:12px;">
     <span class="alert-icon">&#10003;</span>
     <span>This is not just a Wallet fix. Getting your device to pass Play Integrity at DEVICE or STRONG level sorts out any app that was blocking you due to root, banking apps, payment apps, certain streaming services. Anything that does a full integrity check gets fixed here.</span>
-  </div>
   </div>
 
   <div class="alert warning" style="margin-bottom:16px;">
