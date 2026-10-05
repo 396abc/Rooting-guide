@@ -603,7 +603,7 @@ footer {
     </div>
   </div>
   <div class="nav-group">
-    <p class="nav-group-label">Part 1 &mdash; Root</p>
+    <p class="nav-group-label">Part 1: Root</p>
     <div class="nav-links">
       <a class="nav-link" href="#s1">Step 1. ADB Setup</a>
       <a class="nav-link" href="#s2">Step 2. Fastboot Driver</a>
@@ -615,14 +615,14 @@ footer {
     </div>
   </div>
   <div class="nav-group">
-    <p class="nav-group-label">Part 2 &mdash; What You Can Do</p>
+    <p class="nav-group-label">Part 2: What You Can Do</p>
     <div class="nav-links">
-      <a class="nav-link" href="#s8">Step 1. ReLSposed</a>
+      <a class="nav-link" href="#s8">Step 1. Vector</a>
       <a class="nav-link" href="#s9">Step 2. ReVanced</a>
     </div>
   </div>
   <div class="nav-group">
-    <p class="nav-group-label">Part 3 &mdash; Google Wallet</p>
+    <p class="nav-group-label">Part 3: Google Wallet</p>
     <div class="nav-links">
       <a class="nav-link" href="#s10">Step 1. Downloads</a>
       <a class="nav-link" href="#s11">Step 2. DenyList</a>
@@ -653,26 +653,26 @@ footer {
       <div class="overview-row">
         <span class="or-num">1.</span>
         <span class="or-title">Root</span>
-        <span class="or-sep">&mdash;</span>
+        <span class="or-sep">&middot;</span>
         <span class="or-desc">ADB, unlock bootloader, patch boot image, install Magisk and Zygisk</span>
       </div>
       <div class="overview-row">
         <span class="or-num">2.</span>
         <span class="or-title">What you can do with root</span>
-        <span class="or-sep">&mdash;</span>
-        <span class="or-desc">ReLSposed Xposed framework, ReVanced for patching Spotify and YouTube</span>
+        <span class="or-sep">&middot;</span>
+        <span class="or-desc">Vector Xposed framework, ReVanced for patching Spotify and YouTube</span>
       </div>
       <div class="overview-row">
         <span class="or-num">3.</span>
         <span class="or-title">Google Wallet</span>
-        <span class="or-sep">&mdash;</span>
+        <span class="or-sep">&middot;</span>
         <span class="or-desc">Restore contactless payments and any banking apps blocked by root</span>
       </div>
     </div>
   </div>
   <div class="alert tip">
     <span class="alert-icon">&#10003;</span>
-    <span>Everything in this guide is free and open source. Magisk, TrickyStore, ReLSposed, ReVanced, all of it has public source code on GitHub. Nothing shady, no random APKs from forums.</span>
+    <span>Everything in this guide is free and open source. Magisk, TrickyStore, Vector, ReVanced, all of it has public source code on GitHub. Nothing shady, no random APKs from forums.</span>
   </div>
 </div>
 
@@ -723,7 +723,7 @@ footer {
 </div>
 
 <div class="section" id="s1">
-  <div class="section-label">Part 1 &mdash; Root with Magisk</div>
+  <div class="section-label">Part 1: Root with Magisk</div>
   <h2>Installing Magisk</h2>
   <p class="section-desc">Seven steps: get ADB working, unlock the bootloader, patch the boot image, flash it back, done.</p>
 
@@ -781,8 +781,8 @@ footer {
       </div>
       <p style="margin-top:10px;">Extract the ZIP. You are looking for two files:</p>
       <div class="ul" style="margin-top:8px;">
-        <div class="li"><code>init_boot.img</code> &mdash; what Magisk patches on Android 13 and newer devices</div>
-        <div class="li"><code>boot.img</code> &mdash; older devices use this instead</div>
+        <div class="li"><code>init_boot.img</code> &middot; what Magisk patches on Android 13 and newer devices</div>
+        <div class="li"><code>boot.img</code> &middot; older devices use this instead</div>
       </div>
       <div class="alert note" style="margin-top:10px;">
         <span class="alert-icon">&#8505;</span>
@@ -858,7 +858,7 @@ footer {
       <h3>Turning on Zygisk</h3>
     </div>
     <div class="step-body">
-      <p>In Magisk settings (top right), toggle Zygisk on and reboot. Zygisk is what lets modules like ReLSposed and TrickyStore hook into the system. Both Part 2 and Part 3 need it.</p>
+      <p>In Magisk settings (top right), toggle Zygisk on and reboot. Zygisk is what lets modules like Vector and TrickyStore hook into the system. Both Part 2 and Part 3 need it.</p>
       <div class="alert note">
         <span class="alert-icon">&#8505;</span>
         <span>Root is done. Head to Part 2 to see what you can actually do with it, or skip to Part 3 if getting Google Wallet back is the priority.</span>
@@ -868,18 +868,18 @@ footer {
 </div>
 
 <div class="section" id="s8">
-  <div class="section-label">Part 2 &mdash; What You Can Do With Root</div>
-  <h2>ReLSposed & ReVanced</h2>
-  <p class="section-desc">Root on its own does not do much visibly. This is one of the more useful things you can do with it. ReLSposed is the Xposed framework: it lets modules reach inside running apps and change how they behave, without touching the APK. ReVanced is built on top of that and lets you patch apps like Spotify and YouTube to remove ads, unlock features, and so on. There are hundreds of other Xposed modules if you want to explore further.</p>
+  <div class="section-label">Part 2: What You Can Do With Root</div>
+  <h2>Vector & ReVanced</h2>
+  <p class="section-desc">Root on its own does not do much visibly. This is one of the more useful things you can do with it. Vector is the Xposed framework: it lets modules reach inside running apps and change how they behave, without touching the APK. ReVanced is built on top of that and lets you patch apps like Spotify and YouTube to remove ads, unlock features, and so on. There are hundreds of other Xposed modules if you want to explore further.</p>
 
   <div class="step">
     <div class="step-header">
       <span class="step-num">1</span>
-      <h3>Installing ReLSposed</h3>
+      <h3>Installing Vector</h3>
     </div>
     <div class="step-body">
-      <p>The original <a href="https://github.com/LSPosed/LSPosed" target="_blank">LSPosed</a> is no longer updated and does not work on Android 16. The maintained fork is <a href="https://github.com/ThePedroo/ReLSPosed/releases/" target="_blank">ThePedroo/ReLSPosed</a>, which goes up to Android 16 and is what you want here.</p>
-      <p>Download the latest stable ZIP from that page. In Magisk, go to <strong>Modules &rarr; Install from storage</strong>, select the ZIP, and reboot. After rebooting, install the manager APK from the same release. You will get a persistent notification in your status bar. Tap that to open the manager.</p>
+      <p>The original <a href="https://github.com/LSPosed/LSPosed" target="_blank">LSPosed</a> is no longer updated and does not work on Android 16. The maintained fork is <a href="https://github.com/JingMatrix/Vector" target="_blank">JingMatrix/Vector</a>, which goes up to Android 16 and is what you want here.</p>
+      <p>Download the latest stable ZIP from the <a href="https://github.com/JingMatrix/Vector/releases" target="_blank">Vector releases page</a>. In Magisk, go to <strong>Modules &rarr; Install from storage</strong>, select the ZIP, and reboot. After rebooting, install the manager APK from the same release. You will get a persistent notification in your status bar. Tap that to open the manager.</p>
       </div>
     </div>
   </div>
@@ -906,7 +906,7 @@ footer {
 </div>
 
 <div class="section" id="s10">
-  <div class="section-label">Part 3 &mdash; Google Wallet</div>
+  <div class="section-label">Part 3: Google Wallet</div>
   <h2>Getting Google Wallet working again</h2>
   <p class="section-desc">When you root, Google detects it through Play Integrity and marks the device as untrusted, which kills contactless payments and blocks some stricter banking apps. This section walks through making the device appear clean again so Wallet and everything else starts working.</p>
 
@@ -963,7 +963,7 @@ footer {
           <span class="dlitem-icon">&#128229;</span>
           <div>
             <div class="dlname">Tricky Store Addon <span style="font-weight:400;color:var(--color-fg-muted);">(Magisk module ZIP)</span></div>
-            <div class="dlsub"><a href="https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases" target="_blank">github.com/KOWX712/Tricky-Addon-Update-Target-List</a> &mdash; v4.4 or newer works</div>
+            <div class="dlsub"><a href="https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases" target="_blank">github.com/KOWX712/Tricky-Addon-Update-Target-List</a> (v4.4 or newer works)</div>
           </div>
         </div>
         <div class="dlitem">
@@ -1058,7 +1058,7 @@ footer {
       <p>Open the Play Integrity checker app and run a check. You are looking for one of these:</p>
       <div class="itag-row">
         <span class="itag pass">MEETS_STRONG_INTEGRITY &#10003;</span>
-        <span class="itag ok">MEETS_DEVICE_INTEGRITY &mdash; acceptable</span>
+        <span class="itag ok">MEETS_DEVICE_INTEGRITY (acceptable)</span>
       </div>
       <p style="margin-top:10px;">DEVICE_INTEGRITY is enough for Wallet in most places. BASIC_INTEGRITY only means something went wrong. Go back to step 5 and try a different keybox.</p>
     </div>
@@ -1113,15 +1113,15 @@ footer {
     <span>Everything here is open source. If you are curious how any of it works, the code is all on GitHub.</span>
   </div>
   <div class="credits-list">
-    <div class="credit"><span class="c-handle">@topjohnwu</span><span class="c-desc"><a href="https://github.com/topjohnwu/Magisk" target="_blank">Magisk</a> &mdash; systemless root, Zygisk, DenyList (GPL-3)</span></div>
-    <div class="credit"><span class="c-handle">@5ec1cff</span><span class="c-desc"><a href="https://github.com/5ec1cff/TrickyStore" target="_blank">Tricky Store</a> & KSU UI &mdash; keybox injection</span></div>
-    <div class="credit"><span class="c-handle">@herzhenr</span><span class="c-desc">SPIC &mdash; Simple Play Integrity Checker</span></div>
+    <div class="credit"><span class="c-handle">@topjohnwu</span><span class="c-desc"><a href="https://github.com/topjohnwu/Magisk" target="_blank">Magisk</a>: systemless root, Zygisk, DenyList (GPL-3)</span></div>
+    <div class="credit"><span class="c-handle">@5ec1cff</span><span class="c-desc"><a href="https://github.com/5ec1cff/TrickyStore" target="_blank">Tricky Store</a> & KSU UI: keybox injection</span></div>
+    <div class="credit"><span class="c-handle">@herzhenr</span><span class="c-desc">SPIC: Simple Play Integrity Checker</span></div>
     <div class="credit"><span class="c-handle">Alt-Repo team</span><span class="c-desc"><a href="https://github.com/Magisk-Modules-Alt-Repo/abootloop" target="_blank">Anti Bootloop module</a></span></div>
-    <div class="credit"><span class="c-handle">JingMatrix</span><span class="c-desc"><a href="https://github.com/JingMatrix/Vector" target="_blank">Vector / ReLSposed</a> &mdash; Xposed for Android 16 (GPL-3)</span></div>
-    <div class="credit"><span class="c-handle">ReVanced team</span><span class="c-desc"><a href="https://github.com/ReVanced/revanced-manager" target="_blank">ReVanced Manager</a> &mdash; open source app patching</span></div>
+    <div class="credit"><span class="c-handle">JingMatrix</span><span class="c-desc"><a href="https://github.com/JingMatrix/Vector" target="_blank">Vector</a>: Xposed framework for Android 16 (GPL-3)</span></div>
+    <div class="credit"><span class="c-handle">ReVanced team</span><span class="c-desc"><a href="https://github.com/ReVanced/revanced-manager" target="_blank">ReVanced Manager</a>: open source app patching</span></div>
   </div>
   <div class="xda-box">
-    <p><strong style="color:var(--color-fg-default);">Original Google Wallet guide by Arkl1ne</strong> &mdash; <a href="https://xdaforums.com/t/fix-root-google-wallet-root-fix-strong-integrity-magisk-playintegrityfork-android-12-16.4753880/#post-90228451" target="_blank">XDA Forums: Root Fix &middot; Strong Integrity &middot; Android 12&ndash;16</a></p>
+    <p><strong style="color:var(--color-fg-default);">Original Google Wallet guide by Arkl1ne</strong> &middot; <a href="https://xdaforums.com/t/fix-root-google-wallet-root-fix-strong-integrity-magisk-playintegrityfork-android-12-16.4753880/#post-90228451" target="_blank">XDA Forums: Root Fix &middot; Strong Integrity &middot; Android 12&ndash;16</a></p>
     <p>If you are having issues with Part 3 specifically, check the comments on that thread. There are community-contributed solutions for a range of problems that come up.</p>
   </div>
 </div>
